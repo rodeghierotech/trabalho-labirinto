@@ -1,12 +1,17 @@
 # Atividade 9 - Labirinto
 
-Atividade de Algoritmos e Estruturas de Dados II para comparar três formas de buscar a saída de um labirinto: DFS, BFS e Busca Gulosa.
+Atividade de Algoritmos e Estruturas de Dados II com o objetivo de comparar três algoritmos de busca em um labirinto: DFS, BFS e Busca Gulosa.
 
 ## Labirinto
 
-O labirinto foi criado com 10 linhas e 10 colunas. Nele, `I` é o início, `F` é a saída, `#` representa parede e `.` representa caminho livre.
+Foi criado um labirinto de 10 linhas e 10 colunas, utilizando os seguintes símbolos:
 
+- `I` - Posição inicial
+- `F` - Saída do labirinto
+- `#` - Parede
+- `.` - Caminho livre
 
+```text
 I......#..
 .###.#.#..
 ...#...#..
@@ -17,28 +22,50 @@ I......#..
 ####.#.##.
 ...#......
 ###.....#F
+```
 
-
-Existem caminhos diferentes até a saída, além de paredes e becos sem saída que fazem os algoritmos explorarem posições diferentes.
+O labirinto possui diferentes caminhos até a saída, além de paredes e becos sem saída que fazem os algoritmos explorarem posições diferentes.
 
 ## Implementação
 
-O programa transforma as posições livres em um grafo. Cada posição é ligada às casas livres de cima, da direita, de baixo e da esquerda.
+O programa transforma as posições livres do labirinto em um grafo, conectando cada posição às casas disponíveis acima, à direita, abaixo e à esquerda.
 
-- DFS: utiliza uma pilha e tenta seguir um caminho antes de voltar para outras possibilidades.
-- BFS: utiliza uma fila e percorre o labirinto por níveis, encontrando o menor caminho em número de passos.
-- Busca Gulosa: utiliza uma fila de prioridade e a distância de Manhattan até a saída para escolher a próxima posição.
+Foram implementados três algoritmos:
 
-Os três algoritmos guardam a posição anterior de cada casa para reconstruir o caminho. Na visualização, `*` indica por onde o caminho encontrado passa.
+- **DFS:** utiliza uma lista como pilha, seguindo um caminho até onde conseguir antes de explorar outras possibilidades.
+- **BFS:** utiliza uma lista como fila, explorando as posições por níveis e garantindo o menor caminho em quantidade de passos.
+- **Busca Gulosa:** utiliza uma lista ordenada pela distância de Manhattan até a saída, priorizando as posições que parecem estar mais próximas do destino.
+
+Os três algoritmos armazenam a posição anterior de cada casa para reconstruir o caminho encontrado.
+
+Na visualização, o símbolo `*` representa as posições que fazem parte do caminho.
 
 ## Resultados
 
-| Algoritmo | Tamanho do caminho (passos) | Casas visitadas |
+| Algoritmo | Passos | Casas visitadas |
 |---|---:|---:|
 | DFS | 20 | 28 |
 | BFS | 18 | 43 |
 | Busca Gulosa | 22 | 26 |
 
-A BFS encontrou o menor caminho, com 18 passos, mas visitou mais casas. A DFS encontrou uma rota de 20 passos. Já a Busca Gulosa visitou menos casas que a BFS, mas acabou escolhendo um caminho de 22 passos.
+A BFS encontrou o menor caminho, com 18 passos, mas precisou visitar mais casas durante a busca. Isso acontece porque ela explora as posições por níveis, verificando diferentes possibilidades antes de chegar à saída.
 
-A Busca Gulosa se deixou levar pela distância até a saída: na primeira linha, depois de passar pela coluna 4, continuou para a direita até a coluna 6. Essa direção parecia melhor, mas as paredes impediram a continuação direta, fazendo o algoritmo contornar até voltar para a coluna 4 na terceira linha. A BFS não comete esse erro porque busca por níveis, sem priorizar apenas a proximidade da saída.
+A DFS encontrou um caminho de 20 passos, pois segue uma direção até onde conseguir antes de voltar e explorar outros caminhos.
+
+Já a Busca Gulosa encontrou um caminho de 22 passos, visitando menos casas que a BFS. Como ela prioriza a distância estimada até a saída, pode acabar escolhendo caminhos que parecem melhores inicialmente, mas que são mais longos por causa das paredes.
+
+No labirinto desenvolvido, a Busca Gulosa priorizou o avanço pela primeira linha, pois isso reduzia a distância estimada até a saída. Porém, as paredes impediram a continuação direta, fazendo o algoritmo explorar um desvio.
+
+Assim, foi possível observar que a BFS garante o menor caminho em um labirinto sem pesos, enquanto a DFS e a Busca Gulosa não possuem essa garantia.
+
+## Execução
+
+Para executar o programa, basta ter o Python instalado e utilizar o comando:
+
+```bash
+python main.py
+```
+
+O programa mostra o caminho encontrado por cada algoritmo e, ao final, apresenta uma tabela comparando a quantidade de passos e de casas visitadas.
+
+Não é necessário instalar bibliotecas externas.
